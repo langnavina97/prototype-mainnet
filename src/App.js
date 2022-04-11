@@ -120,7 +120,7 @@ class App extends Component {
     }
     this.setState({ account: accounts[0]}) 
     const SwapContract = new web3.eth.Contract(IndexSwap.abi, "0x37ae7A8dD12d3a4A6a8d6082C39B592FbE2b1938");
-    const NFTPortfolioContract = new web3.eth.Contract(NFTSwap.abi, "0x4f425615d4dc822430BF35128D57b1041F7f3E16"); 
+    const NFTPortfolioContract = new web3.eth.Contract(NFTSwap.abi, "0x40A367c5320440a1aa78aCBC5af0A017Ed1F3772"); 
     const NFTTokenContract = new web3.eth.Contract(IndexToken.abi, "0x16dBB234A9a595967DdC2ea1bb53379752f09Ad4"); 
     const DeFiTokenContract = new web3.eth.Contract(IndexToken.abi, "0x6E49456f284e3da7f1515eEE120E2706cab69fD5");
     this.setState({ SwapContract, DeFiTokenContract, NFTPortfolioContract, NFTTokenContract});
@@ -202,7 +202,7 @@ class App extends Component {
   approveNFTTokens = async() => {
     const web3 = new Web3(window.ethereum);
     
-    const contractAddress = "0x4f425615d4dc822430BF35128D57b1041F7f3E16"; 
+    const contractAddress = "0x40A367c5320440a1aa78aCBC5af0A017Ed1F3772"; 
 
     const aXSTokenConntract = new web3.eth.Contract(IERC.abi, "0x715D400F88C167884bbCc41C5FeA407ed4D2f8A0");
     await aXSTokenConntract.methods.approve(contractAddress, "115792089237316195423570985008687907853269984665640564039457584007913129639935").send({ from: "0x6056773C28c258425Cf9BC8Ba5f86B8031863164" });
@@ -294,7 +294,7 @@ class App extends Component {
       var withdrawAmountInWei = web3.utils.toWei(withdrawAmt, 'ether');
   
   
-      await this.state.NFTTokenContract.methods.approve("0x4f425615d4dc822430BF35128D57b1041F7f3E16", "7787357773333787487837458347754874574837458374")
+      await this.state.NFTTokenContract.methods.approve("0x40A367c5320440a1aa78aCBC5af0A017Ed1F3772", "7787357773333787487837458347754874574837458374")
       .send({from: this.state.account});
   
       var amount = withdrawAmountInWei / 10;
@@ -335,72 +335,72 @@ class App extends Component {
 
     // DeFi
     const BTCTokenConntract = new web3.eth.Contract(IERC.abi, "0x7130d2A12B9BCbFAe4f2634d864A1Ee1Ce3Ead9c");
-    const btcTokenBalanceRes = await this.state.SwapContract.methods.btcBalance(this.state.account).call();
-    //const btcTokenBalanceRes = await BTCTokenConntract.methods.balanceOf("0x6056773C28c258425Cf9BC8Ba5f86B8031863164").call();
+    //const btcTokenBalanceRes = await this.state.SwapContract.methods.btcBalance(this.state.account).call();
+    const btcTokenBalanceRes = await BTCTokenConntract.methods.balanceOf("0x6056773C28c258425Cf9BC8Ba5f86B8031863164").call();
     const helperBtc = await this.getExchangeRate(btcTokenBalanceRes, "0x7130d2A12B9BCbFAe4f2634d864A1Ee1Ce3Ead9c");
     const btcTokenBalanceBnb = web3.utils.fromWei(helperBtc, "ether");
     const btcTokenBalance = web3.utils.fromWei(btcTokenBalanceRes, "ether");
 
     const ETHTokenConntract = new web3.eth.Contract(IERC.abi, "0x2170Ed0880ac9A755fd29B2688956BD959F933F8");
-    const ethTokenBalanceRes = await this.state.SwapContract.methods.ethBalance(this.state.account).call();
-    //const ethTokenBalanceRes = await ETHTokenConntract.methods.balanceOf("0x6056773C28c258425Cf9BC8Ba5f86B8031863164").call();
+    //const ethTokenBalanceRes = await this.state.SwapContract.methods.ethBalance(this.state.account).call();
+    const ethTokenBalanceRes = await ETHTokenConntract.methods.balanceOf("0x6056773C28c258425Cf9BC8Ba5f86B8031863164").call();
     const helperEth = await this.getExchangeRate(ethTokenBalanceRes, "0x2170Ed0880ac9A755fd29B2688956BD959F933F8");
     const ethTokenBalanceBnb = web3.utils.fromWei(helperEth, "ether");
     const ethTokenBalance = web3.utils.fromWei(ethTokenBalanceRes, "ether");
 
     const SHIBATokenConntract = new web3.eth.Contract(IERC.abi, "0x2859e4544C4bB03966803b044A93563Bd2D0DD4D");
-    const shibaTokenBalanceRes = await this.state.SwapContract.methods.shibaBalance(this.state.account).call();
-    //const shibaTokenBalanceRes = await SHIBATokenConntract.methods.balanceOf("0x6056773C28c258425Cf9BC8Ba5f86B8031863164").call();
+    //const shibaTokenBalanceRes = await this.state.SwapContract.methods.shibaBalance(this.state.account).call();
+    const shibaTokenBalanceRes = await SHIBATokenConntract.methods.balanceOf("0x6056773C28c258425Cf9BC8Ba5f86B8031863164").call();
     const helperShib = await this.getExchangeRate(shibaTokenBalanceRes, "0x2859e4544C4bB03966803b044A93563Bd2D0DD4D");
     const shibaTokenBalanceBnb = web3.utils.fromWei(helperShib, "ether");
     const shibaTokenBalance = web3.utils.fromWei(shibaTokenBalanceRes, "ether");
 
     const XRPTokenConntract = new web3.eth.Contract(IERC.abi, "0x1D2F0da169ceB9fC7B3144628dB156f3F6c60dBE");
-    const xrpTokenBalanceRes = await this.state.SwapContract.methods.xrpBalance(this.state.account).call();
-    //const xrpTokenBalanceRes = await XRPTokenConntract.methods.balanceOf("0x6056773C28c258425Cf9BC8Ba5f86B8031863164").call();
+    //const xrpTokenBalanceRes = await this.state.SwapContract.methods.xrpBalance(this.state.account).call();
+    const xrpTokenBalanceRes = await XRPTokenConntract.methods.balanceOf("0x6056773C28c258425Cf9BC8Ba5f86B8031863164").call();
     const helperXrp = await this.getExchangeRate(xrpTokenBalanceRes, "0x1D2F0da169ceB9fC7B3144628dB156f3F6c60dBE");
     const xrpTokenBalanceBnb = web3.utils.fromWei(helperXrp, "ether");
     const xrpTokenBalance = web3.utils.fromWei(xrpTokenBalanceRes, "ether");
 
     const LTCTokenConntract = new web3.eth.Contract(IERC.abi, "0x4338665CBB7B2485A8855A139b75D5e34AB0DB94");
-    const ltcTokenBalanceRes = await this.state.SwapContract.methods.ltcBalance(this.state.account).call();
-    //const ltcTokenBalanceRes = await LTCTokenConntract.methods.balanceOf("0x6056773C28c258425Cf9BC8Ba5f86B8031863164").call();
+    //const ltcTokenBalanceRes = await this.state.SwapContract.methods.ltcBalance(this.state.account).call();
+    const ltcTokenBalanceRes = await LTCTokenConntract.methods.balanceOf("0x6056773C28c258425Cf9BC8Ba5f86B8031863164").call();
     const helperLtc = await this.getExchangeRate(ltcTokenBalanceRes, "0x4338665CBB7B2485A8855A139b75D5e34AB0DB94");
     const ltcTokenBalanceBnb = web3.utils.fromWei(helperLtc, "ether");
     const ltcTokenBalance = web3.utils.fromWei(ltcTokenBalanceRes, "ether");
 
     const DAITokenConntract = new web3.eth.Contract(IERC.abi, "0x1AF3F329e8BE154074D8769D1FFa4eE058B1DBc3");
-    const daiTokenBalanceRes = await this.state.SwapContract.methods.daiBalance(this.state.account).call();
-    //const daiTokenBalanceRes = await DAITokenConntract.methods.balanceOf("0x6056773C28c258425Cf9BC8Ba5f86B8031863164").call();
+    //const daiTokenBalanceRes = await this.state.SwapContract.methods.daiBalance(this.state.account).call();
+    const daiTokenBalanceRes = await DAITokenConntract.methods.balanceOf("0x6056773C28c258425Cf9BC8Ba5f86B8031863164").call();
     const helperDai = await this.getExchangeRate(daiTokenBalanceRes, "0x1AF3F329e8BE154074D8769D1FFa4eE058B1DBc3");
     const daiTokenBalanceBnb = web3.utils.fromWei(helperDai, "ether");
     const daiTokenBalance = web3.utils.fromWei(daiTokenBalanceRes, "ether");
 
     const MAKERTokenConntract = new web3.eth.Contract(IERC.abi, "0x5f0Da599BB2ccCfcf6Fdfd7D81743B6020864350");
-    const makerTokenBalanceRes = await this.state.SwapContract.methods.makerBalance(this.state.account).call();
-    //const makerTokenBalanceRes = await MAKERTokenConntract.methods.balanceOf("0x6056773C28c258425Cf9BC8Ba5f86B8031863164").call();
+    //const makerTokenBalanceRes = await this.state.SwapContract.methods.makerBalance(this.state.account).call();
+    const makerTokenBalanceRes = await MAKERTokenConntract.methods.balanceOf("0x6056773C28c258425Cf9BC8Ba5f86B8031863164").call();
     const helperMaker = await this.getExchangeRate(makerTokenBalanceRes, "0x5f0Da599BB2ccCfcf6Fdfd7D81743B6020864350");
     const makerTokenBalanceBnb = web3.utils.fromWei(helperMaker, "ether");
     const makerTokenBalance = web3.utils.fromWei(makerTokenBalanceRes, "ether");
 
     const LINKTokenConntract = new web3.eth.Contract(IERC.abi, "0xF8A0BF9cF54Bb92F17374d9e9A321E6a111a51bD");
-    const linkTokenBalanceRes = await this.state.SwapContract.methods.linkBalance(this.state.account).call();
-    //const linkTokenBalanceRes = await LINKTokenConntract.methods.balanceOf("0x6056773C28c258425Cf9BC8Ba5f86B8031863164").call();
+    //const linkTokenBalanceRes = await this.state.SwapContract.methods.linkBalance(this.state.account).call();
+    const linkTokenBalanceRes = await LINKTokenConntract.methods.balanceOf("0x6056773C28c258425Cf9BC8Ba5f86B8031863164").call();
     const helperLink = await this.getExchangeRate(linkTokenBalanceRes, "0xF8A0BF9cF54Bb92F17374d9e9A321E6a111a51bD");
     const linkTokenBalanceBnb = web3.utils.fromWei(helperLink, "ether");
     const linkTokenBalance = web3.utils.fromWei(linkTokenBalanceRes, "ether");
 
     const UNITokenConntract = new web3.eth.Contract(IERC.abi, "0xBf5140A22578168FD562DCcF235E5D43A02ce9B1");
-    const uniTokenBalanceRes = await this.state.SwapContract.methods.uniBalance(this.state.account).call();
-    //const uniTokenBalanceRes = await UNITokenConntract.methods.balanceOf("0x6056773C28c258425Cf9BC8Ba5f86B8031863164").call();
+    //const uniTokenBalanceRes = await this.state.SwapContract.methods.uniBalance(this.state.account).call();
+    const uniTokenBalanceRes = await UNITokenConntract.methods.balanceOf("0x6056773C28c258425Cf9BC8Ba5f86B8031863164").call();
     const helperUni = await this.getExchangeRate(uniTokenBalanceRes, "0xBf5140A22578168FD562DCcF235E5D43A02ce9B1");
     const uniTokenBalanceBnb = web3.utils.fromWei(helperUni, "ether");
     const uniTokenBalance = web3.utils.fromWei(uniTokenBalanceRes, "ether");
 
 
     const AAVETokenConntract = new web3.eth.Contract(IERC.abi, "0xfb6115445Bff7b52FeB98650C87f44907E58f802");
-    const aaveTokenBalanceRes = await this.state.SwapContract.methods.aaveBalance(this.state.account).call();
-    //const aaveTokenBalanceRes = await AAVETokenConntract.methods.balanceOf("0x6056773C28c258425Cf9BC8Ba5f86B8031863164").call();
+    //const aaveTokenBalanceRes = await this.state.SwapContract.methods.aaveBalance(this.state.account).call();
+    const aaveTokenBalanceRes = await AAVETokenConntract.methods.balanceOf("0x6056773C28c258425Cf9BC8Ba5f86B8031863164").call();
     const helperAave = await this.getExchangeRate(aaveTokenBalanceRes, "0xfb6115445Bff7b52FeB98650C87f44907E58f802");
     const aaveTokenBalanceBnb = web3.utils.fromWei(helperAave, "ether");
     const aaveTokenBalance = web3.utils.fromWei(aaveTokenBalanceRes, "ether");
