@@ -6,7 +6,7 @@ import IERC from "./abis/IERC20.json";
 import pancakeSwapRouter from "./abis/IPancakeRouter02.json";
 import detectEthereumProvider from '@metamask/detect-provider';
 import Web3 from 'web3';
-import { Grid, Button, Card, Form, Input, Image, Label, Menu, Table } from 'semantic-ui-react';
+import { Grid, Button, Card, Form, Input, Image, Menu, Table } from 'semantic-ui-react';
 import 'semantic-ui-css/semantic.min.css';
 import velvet from "./velvet.png";
 import metamask from "./metamask-fox.svg";
@@ -96,6 +96,7 @@ class App extends Component {
     await this.loadBlockchainData();
     await this.calcTokenBalances();
     await this.getRate();
+    swal("This project is is beta stage");
   }
 
   // first up is to detect ethereum provider
@@ -281,6 +282,8 @@ class App extends Component {
       .catch((err) => {
         console.log(err);
       });
+
+      this.calcTokenBalances();
   }
 
   withdrawNFT = async () => {
@@ -310,6 +313,8 @@ class App extends Component {
         .catch((err) => {
           console.log(err);
         });
+
+        this.calcTokenBalances();
   }
 
   getExchangeRate = async (amountIn, address) => {
@@ -485,10 +490,12 @@ class App extends Component {
               <Card.Group>
                 <Card style={{ width: "900px" }}>
                   <Card.Content style={{ background: "#406ccd" }}>
-                    <Card.Header style={{ color: "white" }}>Top 10 Tokens</Card.Header>
+                    <Card.Header style={{ color: "white" }}>
+                    <p style={{ color: "#C0C0C0", "font-weight": "bold", "text-align": "right" }}>APY: 12%</p>
+                      Top 10 Tokens
+                      </Card.Header>
                     <Card.Description>
-
-                      <p style={{ color: "#C0C0C0" }}>Rate: In return of investing 1 BNB you will receive {this.state.rate} Top10 Token.</p>
+                      <p style={{ color: "#C0C0C0" }}>Rate: In return of investing 1 BNB you will receive 1 Top10 Token.</p>
 
                       <Form onSubmit={this.investDeFi}>
                         <Input style={{ width: "300px", padding: 3 }} required type="text" placeholder="BNB amount to create" name="defiToMint" onChange={this.handleInputChange}></Input>
@@ -496,7 +503,7 @@ class App extends Component {
                       </Form>
 
                       <Form onSubmit={this.withdrawDeFi}>
-                        <Input style={{ width: "300px", padding: 3 }} required type="text" placeholder="BNB amount to redeem" name="withdrawValueDefi" onChange={this.handleInputChange}></Input>
+                        <Input style={{ width: "300px", padding: 3 }} required type="text" placeholder="TOP15 amount to redeem" name="withdrawValueDefi" onChange={this.handleInputChange}></Input>
                         <Button color="green" style={{ margin: "20px", width: "150px" }}>Redeem</Button>
                       </Form>
 
@@ -580,10 +587,12 @@ class App extends Component {
               <Card.Group>
                 <Card style={{ width: "900px" }}>
                   <Card.Content style={{ background: "#406ccd" }}>
-                    <Card.Header style={{ color: "white" }}>Top 10 Metaverse Tokens</Card.Header>
+                    <Card.Header style={{ color: "white" }}>
+                      <p style={{ color: "#C0C0C0", "font-weight": "bold", "text-align": "right" }}>APY: 8%</p>
+                      Top 5 Metaverse Tokens
+                      </Card.Header>
                     <Card.Description>
-
-                      <p style={{ color: "#C0C0C0" }}>Rate: In return of investing 1 BNB you will receive {this.state.rate} META Token.</p>
+                      <p style={{ color: "#C0C0C0" }}>Rate: In return of investing 1 BNB you will receive 1 META Token.</p>
 
                       <Form onSubmit={this.investNFT}>
                         <Input style={{ width: "300px", padding: 3 }} required type="text" placeholder="BNB amount to create" name="nftToMint" onChange={this.handleInputChange}></Input>
@@ -591,7 +600,7 @@ class App extends Component {
                       </Form>
 
                       <Form onSubmit={this.withdrawNFT}>
-                        <Input style={{ width: "300px", padding: 3 }} required type="text" placeholder="BNB amount to redeem" name="withdrawValueNFT" onChange={this.handleInputChange}></Input>
+                        <Input style={{ width: "300px", padding: 3 }} required type="text" placeholder="META amount to redeem" name="withdrawValueNFT" onChange={this.handleInputChange}></Input>
                         <Button color="green" style={{ margin: "20px", width: "150px" }}>Redeem</Button>
                       </Form>
 
