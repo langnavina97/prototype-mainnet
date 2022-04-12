@@ -119,7 +119,7 @@ class App extends Component {
       this.setState({ connected: true })
     }
     this.setState({ account: accounts[0]}) 
-    const SwapContract = new web3.eth.Contract(IndexSwap.abi, "0x37ae7A8dD12d3a4A6a8d6082C39B592FbE2b1938");
+    const SwapContract = new web3.eth.Contract(IndexSwap.abi, "0x380d2b6742AAD7ae97f199a109c1F81A34E1cb86");
     const NFTPortfolioContract = new web3.eth.Contract(NFTSwap.abi, "0x40A367c5320440a1aa78aCBC5af0A017Ed1F3772"); 
     const NFTTokenContract = new web3.eth.Contract(IndexToken.abi, "0x16dBB234A9a595967DdC2ea1bb53379752f09Ad4"); 
     const DeFiTokenContract = new web3.eth.Contract(IndexToken.abi, "0x6E49456f284e3da7f1515eEE120E2706cab69fD5");
@@ -223,7 +223,7 @@ class App extends Component {
   approveDeFiTokens = async() => {
     const web3 = new Web3(window.ethereum);
     
-    const contractAddress = "0x37ae7A8dD12d3a4A6a8d6082C39B592FbE2b1938"; 
+    const contractAddress = "0x380d2b6742AAD7ae97f199a109c1F81A34E1cb86"; 
 
     const BTCTokenConntract = new web3.eth.Contract(IERC.abi, "0x7130d2A12B9BCbFAe4f2634d864A1Ee1Ce3Ead9c");
     BTCTokenConntract.methods.approve(contractAddress, "115792089237316195423570985008687907853269984665640564039457584007913129639935").send({ from: "0x6056773C28c258425Cf9BC8Ba5f86B8031863164" });
@@ -264,7 +264,7 @@ class App extends Component {
     var withdrawAmt = this.state.withdrawValueDefi;
     var withdrawAmountInWei = web3.utils.toWei(withdrawAmt, 'ether');
 
-    await this.state.DeFiTokenContract.methods.approve("0x37ae7A8dD12d3a4A6a8d6082C39B592FbE2b1938", "7787357773333787487837458347754874574837458374")
+    await this.state.DeFiTokenContract.methods.approve("0x380d2b6742AAD7ae97f199a109c1F81A34E1cb86", "7787357773333787487837458347754874574837458374")
     .send({from: this.state.account});
 
 
@@ -461,13 +461,14 @@ class App extends Component {
 
   render() {
     let button;
-/*      button = <Button style={{ position: "absolute", top: "30px", right: "20px" }} onClick={this.connectWallet} color="orange">
+    if (!this.state.connected) {
+      button = <Button style={{ position: "absolute", top: "30px", right: "20px" }} onClick={this.connectWallet} color="orange">
           <Image style={{ "padding-top": "7px" }} floated="left" size="mini" src={metamask} />
           <p>Connect to MetaMask</p>
         </Button>
     } else {
       button = <p style={{ position: "absolute", top: "90px", right: "20px", color: "#C0C0C0" }}><b>Account:</b> {this.state.account}</p>
-    }*/
+    }
 
     return (
       <div className="App">
