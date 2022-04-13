@@ -94,7 +94,8 @@ class App extends Component {
   async componentDidMount() {
     await this.loadWeb3();
     await this.loadBlockchainData();
-    await this.calcTokenBalances();
+    await this.calcTokenBalancesDeFi();
+    await this.calcTokenBalancesNFT();
     await this.getRate();
     swal("This project is is beta stage");
   }
@@ -172,7 +173,7 @@ class App extends Component {
       swal("Investment failed!");
     }
 
-    this.calcTokenBalances();
+    this.calcTokenBalancesNFT();
   }
 
   investDeFi = async () => {
@@ -196,7 +197,7 @@ class App extends Component {
         swal("Investment failed!");
       }
 
-    this.calcTokenBalances();
+    this.calcTokenBalancesDeFi();
 
   }
 
@@ -283,7 +284,7 @@ class App extends Component {
         console.log(err);
       });
 
-      this.calcTokenBalances();
+      this.calcTokenBalancesDeFi();
   }
 
   withdrawNFT = async () => {
@@ -314,7 +315,7 @@ class App extends Component {
           console.log(err);
         });
 
-        this.calcTokenBalances();
+        this.calcTokenBalancesNFT();
   }
 
   getExchangeRate = async (amountIn, address) => {
@@ -323,17 +324,14 @@ class App extends Component {
 
     var path = [];
     path[0] = address;
-    path[1] = "0xbb4CdB9CBd36B01bD1cBaEBF2De08d9173bc095c";
+    path[1] = "0xe9e7CEA3DedcA5984780Bafc599bD69ADd087D56";
 
     const er = await pancakeRouter.methods.getAmountsOut(amountIn, path).call();
     return er[1];
   }
 
-  calcTokenBalances = async () => {
+  calcTokenBalancesDeFi = async () => {
     const web3 = window.web3;
-
-    const nftTokenBalanceRes = await this.state.NFTTokenContract.methods.balanceOf(this.state.account).call();
-    const nftTokenBalance = web3.utils.fromWei(nftTokenBalanceRes, "ether");
 
     const defiTokenBalanceRes = await this.state.DeFiTokenContract.methods.balanceOf(this.state.account).call();
     const defiTokenBalance = web3.utils.fromWei(defiTokenBalanceRes, "ether");
@@ -410,7 +408,23 @@ class App extends Component {
     const aaveTokenBalanceBnb = web3.utils.fromWei(helperAave, "ether");
     const aaveTokenBalance = web3.utils.fromWei(aaveTokenBalanceRes, "ether");
 
+    this.setState({
+      defiTokenBalance,
+      btcTokenBalance, ethTokenBalance, shibaTokenBalance, xrpTokenBalance, ltcTokenBalance,
+      btcTokenBalanceBnb, ethTokenBalanceBnb, shibaTokenBalanceBnb, xrpTokenBalanceBnb, ltcTokenBalanceBnb,
+      daiTokenBalance, makerTokenBalance, linkTokenBalance, uniTokenBalance, aaveTokenBalance,
+      daiTokenBalanceBnb, makerTokenBalanceBnb, linkTokenBalanceBnb, uniTokenBalanceBnb, aaveTokenBalanceBnb,
+    });
+  }
+
+    calcTokenBalancesNFT = async () => {
     // NFT
+
+    const web3 = window.web3;
+
+    const nftTokenBalanceRes = await this.state.NFTTokenContract.methods.balanceOf(this.state.account).call();
+    const nftTokenBalance = web3.utils.fromWei(nftTokenBalanceRes, "ether");
+
     const AXSTokenConntract = new web3.eth.Contract(IERC.abi, "0x715D400F88C167884bbCc41C5FeA407ed4D2f8A0");
     const axsTokenBalanceRes = await this.state.NFTPortfolioContract.methods.axsBalance(this.state.account).call();
     //const axsTokenBalanceRes = await AXSTokenConntract.methods.balanceOf("0x6056773C28c258425Cf9BC8Ba5f86B8031863164").call();
@@ -448,11 +462,7 @@ class App extends Component {
    
 
     this.setState({
-      nftTokenBalance, defiTokenBalance,
-      btcTokenBalance, ethTokenBalance, shibaTokenBalance, xrpTokenBalance, ltcTokenBalance,
-      btcTokenBalanceBnb, ethTokenBalanceBnb, shibaTokenBalanceBnb, xrpTokenBalanceBnb, ltcTokenBalanceBnb,
-      daiTokenBalance, makerTokenBalance, linkTokenBalance, uniTokenBalance, aaveTokenBalance,
-      daiTokenBalanceBnb, makerTokenBalanceBnb, linkTokenBalanceBnb, uniTokenBalanceBnb, aaveTokenBalanceBnb,
+      nftTokenBalance,
       axsTokenBalance, racaTokenBalance, mboxTokenBalance, mcTokenBalance, aliceTokenBalance,
       axsTokenBalanceBnb, racaTokenBalanceBnb, mboxTokenBalanceBnb, mcTokenBalanceBnb, aliceTokenBalanceBnb,
     });
@@ -512,7 +522,7 @@ class App extends Component {
                           <Table.Row>
                             <Table.HeaderCell style={{ color: "white" }}>Token</Table.HeaderCell>
                             <Table.HeaderCell style={{ color: "white" }}>Balance</Table.HeaderCell>
-                            <Table.HeaderCell style={{ color: "white" }}>Balance in BNB</Table.HeaderCell>
+                            <Table.HeaderCell style={{ color: "white" }}>Balance in BUSD</Table.HeaderCell>
                           </Table.Row>
                         </Table.Header>
 
@@ -609,7 +619,7 @@ class App extends Component {
                           <Table.Row>
                             <Table.HeaderCell style={{ color: "white" }}>Token</Table.HeaderCell>
                             <Table.HeaderCell style={{ color: "white" }}>Balance</Table.HeaderCell>
-                            <Table.HeaderCell style={{ color: "white" }}>Balance in BNB</Table.HeaderCell>
+                            <Table.HeaderCell style={{ color: "white" }}>Balance in BUSD</Table.HeaderCell>
                           </Table.Row>
                         </Table.Header>
 
