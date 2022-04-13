@@ -97,7 +97,7 @@ class App extends Component {
     await this.calcTokenBalancesDeFi();
     await this.calcTokenBalancesNFT();
     await this.getRate();
-    swal("This project is is beta stage");
+    swal("The project is in the alpha stage, proceed at your own risk");
   }
 
   // first up is to detect ethereum provider
